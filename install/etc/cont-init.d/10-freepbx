@@ -199,6 +199,14 @@ EOF
       print_notice "Stopping MongoDB"
       silent mongod --unixSocketPrefix=/var/run/mongodb --config /etc/mongodb.conf --shutdown
     fi
+    # ADDITIONAL MODULES
+    if [ "$ADDITIONAL_MODULES_LIST" != "" ]; then
+      print_notice "Additional modules install:"
+      for module in $ADDITIONAL_MODULES_LIST; do
+        print_notice"...$module"
+        fwconsole ma downloadinstall $module
+      done
+    fi
     silent fwconsole chown
     silent fwconsole reload
     silent fwconsole restart
